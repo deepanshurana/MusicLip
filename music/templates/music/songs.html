@@ -1,0 +1,67 @@
+{% extends 'music/base.html' %}
+{% block title %}All Songs{% endblock %}
+{% block songs_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li  {% if filter_by == 'all' %}class="nav-item active"{% endif %}>
+                    <a class="nav-link" href="{% url 'music:songs' 'all' %}">View All</a></li>
+                <li {% if filter_by == 'favorites' %}class="nav-item active"{% endif %}>
+                    <a class="nav-link" href="{% url 'music:songs' 'favorites' %}">Favorites</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="card text-white">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Song Title</th>
+                                <th>Artist</th>
+                                <th>Audio File</th>
+                                <th>Album</th>
+                                <th>Favorite</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for song in song_list %}
+                                <tr>
+                                    <td>{{ song.song_title }}</td>
+                                    <td>{{ song.album.artist }}</td>
+                                    <td>
+                                        <a target="_blank" href="{{ song.audio_file.url }}">
+                                            <button type="button" class="btn btn-success btn-xs">
+                                               <i class="fas fa-play-circle"></i>&nbsp; Play
+                                            </button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'music:detail' song.album.id %}">
+                                            <img src="{{ song.album.album_logo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><i class="fas fa-heart "{% if song.is_favorite %}active{% endif %}"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

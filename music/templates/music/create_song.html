@@ -1,0 +1,63 @@
+{% extends 'music/base.html' %}
+{% block title %}Add a New Song{% endblock %}
+{% block body %}
+<div class="container-fluid my-2">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="card text-white">
+                <div class="card-body">
+                        <a href="{% url 'music:detail' album.id %}">
+                            {% if album.album_logo %}
+                                <img  src="{{ album.album_logo.url }}" class=" card-img-top img-responsive">
+                            {% else %}
+                                <h3>No image to display</h3>
+                            {% endif %}
+                        </a>
+                        <h1 class="card-title">{{ album.album_title }}</h1>
+                        <h4 class="card-subtitle text-muted">{{ album.genre }}
+                        </h4>
+                    <h3>{{ album.artist }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'music:detail' album.id %}">View All</a></li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'music:create_song' album.id %}">Add New Song</a></li>
+            </ul>
+
+            <div class="card text-white">
+                <div class="card-body">
+                    <h3>Add a New Song</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="album" value="{{ album }}">
+                        {% include 'music/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-danger">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

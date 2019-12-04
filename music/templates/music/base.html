@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MusicLip{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'music/glyphicon.css' %}"/>
+    <script src="https://kit.fontawesome.com/f1404fab05.js" crossorigin="anonymous"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> 
+    <script src="{% static 'music/js/main.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-custom">
+
+        <!-- Header -->
+        <a class="navbar-brand" href="{% url 'music:index' %}">MusicLip</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#topNavBar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Items -->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class=" navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'music:index' %}">
+                    <i class="fab fa-soundcloud"></i>&nbsp; Albums</a></li>
+                <li class="{% block songs_active %}{% endblock %}"><a class="nav-link" href="{% url 'music:songs' 'all' %}">
+                    <i class="fa fa-music"></i>&nbsp; Songs</a></li>
+            </ul>
+            <form class="form-inline my-2 my-md-0"  role="search" method="get" action="{% url 'music:index' %}">
+                    <input class="form-control" type="search" placeholder='Find your music' name="q" value="{{ request.GET.q }}">
+                <button type="submit" class="btn btn-danger ml-1"><i class="fa fa-search"></i></button>
+            </form>
+            <ul class=" navbar-nav navbar-right">
+                <li class="nav-item">
+                    <a href="{% url 'music:create_album' %}" class="nav-link">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp; Add Album
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'music:logout_user' %}" class="nav-link">
+                    <i class="fas fa-user" aria-hidden="True"></i></a>
+                </li>
+            </ul>
+        </div>
+</nav>
+{% block body %}
+{% endblock %}
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rTttps://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> 
+</html>
